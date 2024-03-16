@@ -1,10 +1,12 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const cors = require('cors');
+const app = express();
 const port = 4000
 
 const issues = {};
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/api/issues', (req, res) => {
     res.send(Object.values(issues));
