@@ -16,9 +16,19 @@ export function usePostIssue() {
 }
 
 export function usePutIssue() {
-  return useSWRMutation<Issue, unknown, string, Issue>('/issues/put', (_: string, { arg }) => putIssues(arg));
+  const { mutate } = useSWRConfig();
+  return useSWRMutation<Issue, unknown, string, Issue>('/issues/put', (_: string, { arg }) => putIssues(arg), {
+    onSuccess: () => {
+      void mutate('/issues');
+    },
+  });
 }
 
 export function useDeleteIssue() {
-  return useSWRMutation<string, unknown, string, string>('/issues/delete', (_: string, { arg }) => deleteIssue(arg));
+  const { mutate } = useSWRConfig();
+  return useSWRMutation<boolean, unknown, string, string>('/issues/delete', (_: string, { arg }) => deleteIssue(arg), {
+    onSuccess: () => {
+      void mutate('/issues');
+    },
+  });
 }

@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {useAllIssues} from "../hooks/useIssues.ts";
-import {Card, Space} from "antd";
+import {Space, Typography} from "antd";
+import Issue from "./Issue.tsx";
 
 interface IssuesProps {}
 
@@ -9,18 +10,26 @@ const Issues: FC<IssuesProps> = () => {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error</p>}
+      {isLoading && (
+        <Typography.Text type="secondary">
+          Loading...
+        </Typography.Text>
+      )}
+      {error && (
+        <Typography.Text type="danger">
+          Error loading issues ... try again later
+        </Typography.Text>
+      )}
       {data && (
-        <Space size={8} direction="vertical">
+        <Space style={{ width: '100%' }} size={8} direction="vertical">
           {data.map((issue) => (
-            <Card
-              key={issue.id}
-              title={issue.title}
-            >
-              {issue.description}
-            </Card>
+            <Issue issue={issue} key={issue.id} />
           ))}
+          {data.length === 0 && (
+            <Typography.Text type="secondary">
+              No issues available
+            </Typography.Text>
+          )}
         </Space>
       )}
     </>

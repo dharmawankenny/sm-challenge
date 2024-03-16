@@ -40,9 +40,9 @@ export async function putIssues(issue: Issue): Promise<Issue> {
   return res.json();
 }
 
-export async function deleteIssue(id: string): Promise<string> {
+export async function deleteIssue(id: string): Promise<boolean> {
   const res = await fetch(`${API_BASE_URL}/issues/${id}`, {
     method: 'DELETE',
   });
-  return res.json();
+  return res.status === 200;
 }

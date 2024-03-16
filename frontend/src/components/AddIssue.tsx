@@ -11,14 +11,14 @@ const AddIssue: FC<AddIssueProps> = () => {
   const { trigger, isMutating } = usePostIssue();
 
   return (
-    <Space direction="vertical">
+    <Space style={{ width: '100%' }} direction="vertical">
       <Input
         placeholder="Issue Title"
         value={title}
         onChange={(evt) => setTitle(evt.target.value)}
         disabled={isMutating}
       />
-      <Input
+      <Input.TextArea
         placeholder="Description"
         value={description}
         onChange={(evt) => setDescription(evt.target.value)}
@@ -26,8 +26,15 @@ const AddIssue: FC<AddIssueProps> = () => {
       />
       <Button
         type="primary"
-        disabled={isMutating || !title || !description}
-        onClick={() => title && description && trigger({ title, description })}
+        onClick={async () => {
+          if (title && description) {
+            await trigger({ title, description });
+            setTitle("");
+            setDescription("");
+          }
+        }}
+        disabled={!title || !description}
+        loading={isMutating}
         block
       >
         Add Issue

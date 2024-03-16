@@ -6,7 +6,7 @@ import AddIssue from "./components/AddIssue.tsx";
 
 function App() {
   return (
-    <Space direction="vertical">
+    <Space className="App" direction="vertical">
       <Typography.Title level={1}>Issues</Typography.Title>
       <AddIssue />
       <Issues />
